@@ -3,6 +3,7 @@ import Header from "./Header";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
+import './js/them.js'
 
 
 const Servicedetails = () => {
@@ -48,6 +49,12 @@ const Servicedetails = () => {
     }
 
 
+    // update page hides and shows
+    const [updates, setUpdates]= useState(false);
+    const onAddUpdate = ()=>{
+        setUpdates(true)
+
+    }
 
     // update servicesssss
 
@@ -109,6 +116,10 @@ const Servicedetails = () => {
         setFiles(selectedFiles);
 
     };
+
+    
+
+    
 
     return (
 
@@ -189,7 +200,7 @@ const Servicedetails = () => {
                                                             <div className="pe-4 col-12 text-end">
                                                                 <Link ><button onClick={deleteService} className="btn btn-danger px-5 me-2 mb-3">Delete</button></Link>
                                                                
-                                                                <Link><button id="updatebutton" className="btn btn-primary me-1 px-5 mb-3">Update</button></Link>
+                                                                <Link><button id="updateButton" onClick={()=>onAddUpdate()} className="btn btn-primary me-1 px-5 mb-3">Update</button></Link>
                                                             </div>
 
                                                         </div>
@@ -201,7 +212,10 @@ const Servicedetails = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-6">
+                            {
+                                updates ? (
+                                    <>
+                                         <div className="col-lg-6">
                                 <div className="row">
                                     <div className="col-12">
                                         <div className="card recent-sales overflow-auto">
@@ -254,6 +268,11 @@ const Servicedetails = () => {
                                     </div>
                                 </div>
                             </div>
+                                    </>
+                                ): null
+                            }
+                           
+                            
                         </div>
                     </section>
                 </main>{/* End #main */}
