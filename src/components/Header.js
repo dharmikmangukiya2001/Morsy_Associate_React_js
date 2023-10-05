@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import '../App.css'
 import axios from "axios";
 
 
@@ -46,7 +47,7 @@ const Header = () => {
             <header id="header" className="header fixed-top d-flex align-items-center">
                 <div className="d-flex align-items-center justify-content-between">
                     <a href="index.html" className="logo d-flex align-items-center">
-                        <img src="/assets/img/logo.png" width="250px" alt />
+                        <Link to="/admin_home"><img src="/assets/img/logo.png" width="250px" alt /></Link>
                         {/* <img src={require('')} width="250px" alt /> */}
                         {/* <span className="d-none d-lg-block">NiceAdmin</span> */}
                     </a>
@@ -188,12 +189,12 @@ const Header = () => {
                         <li className="nav-item dropdown pe-3">
                             <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
                                 <img src="../assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" />
-                                {/* <span className="d-none d-md-block dropdown-toggle ps-2">{admins.adminname}</span> */}
+                                <span className="d-none d-md-block dropdown-toggle ps-2">{admins.adminname}</span>
                             </a>{/* End Profile Iamge Icon */}
                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li className="dropdown-header">
-                                    {/* <h6>{admins.adminname}</h6> */}
-                                    {/* <span>{admins.adminemail}</span> */}
+                                    <h6>{admins.adminname}</h6>
+                                    <span>{admins.adminemail}</span>
                                 </li>
                                 <li>
                                     <hr className="dropdown-divider" />
@@ -244,10 +245,10 @@ const Header = () => {
                             <i className="bi bi-grid" />
                             <span>Dashboard</span>
                         </a>
-                    </li>{/* End Dashboard Nav */}
+                    </li>
                     <li className="nav-item">
-                            <Link className="nav-link collapsed" to='/home'><i className="bi bi-menu-button-wide" /><span>Dashboard</span></Link>
-                    </li>{/* End Components Nav */}
+                            <Link className="nav-link collapsed" to='/admin_home'><i className="bi bi-menu-button-wide" /><span>Dashboard</span></Link>
+                    </li>
                     <li className="nav-item">
                         <a className="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
                             <i className="bi bi-journal-text" /><span>Services</span><i className="bi bi-chevron-down ms-auto" />
@@ -255,24 +256,24 @@ const Header = () => {
                         <ul id="forms-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li>
                                 <a href="forms-elements.html" class="a-none ps-0">
-                                    <Link className='a-none' to='/addservice'><i className="bi bi-plus-square fs-5" /><span>Add Services</span></Link>
+                                    <Link className='a-none' to='/admin_addservice'><i className="bi bi-plus-square fs-5" /><span>Add Services</span></Link>
                                 </a>
                             </li>
                             <li>
                                 <a href="forms-layouts.html" class="a-none ps-0">
-                                    <Link className='a-none' to="/showservices"><i className="bi bi-server fs-5" /><span>Show Services</span></Link>
+                                    <Link className='a-none' to="/admin_showservices"><i className="bi bi-server fs-5" /><span>Show Services</span></Link>
                                 </a>
                             </li>
                         </ul>
                     </li>{/* End Forms Nav */}
                     <li className="nav-item">
-                        <a className="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <a className="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse">
                             <i className="bi bi-layout-text-window-reverse" /><span>Providers</span><i className="bi bi-chevron-down ms-auto" />
                         </a>
                         <ul id="tables-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li>
-                                <a href="tables-general.html" class="a-none">
-                                    <i className="bi bi-plus-square fs-5" /><span>Add Provider</span>
+                                <a href="tables-general.html" class="a-none ps-0">
+                                    <Link className='a-none' to='/admin_addprovider'><i className="bi bi-plus-square fs-5" /><span>Add Provider</span></Link>
                                 </a>
                             </li>
                             <li>

@@ -3,7 +3,6 @@ import Header from "./Header";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom'
-import './js/them.js'
 
 
 const Servicedetails = () => {
@@ -40,7 +39,7 @@ const Servicedetails = () => {
         axios.get(`http://192.168.1.111:8000/admin/deleteservice/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
             console.log(response.data);
-            nevigate('/showservices')
+            nevigate('/admin_showservices')
         })
             .catch(function (error) {
                 // handle error
@@ -56,8 +55,11 @@ const Servicedetails = () => {
 
     }
 
-    // update servicesssss
 
+
+
+    // update servicesssss
+    const [updatedData, setUpdatedData] = useState({});
     const [servicename, setServicename] = useState('');
     const [servicedetails, setServicedetails] = useState('');
     const [files, setFiles] = useState('');
@@ -85,9 +87,9 @@ const Servicedetails = () => {
         var premailid = provideremailid
 
 
-        formData.append("addservice", sename)
+        formData.append("addservices", sename)
         formData.append("servicedetails", sedetails)
-        formData.append("provideremil", premailid)
+        formData.append("provideremail", premailid)
 
         try {
 
@@ -103,6 +105,7 @@ const Servicedetails = () => {
                 setServicedetails('');
                 setFiles('');
                 setProvideremailid('');
+                nevigate('/admin_showservices')
             } else {
                 console.log("Error uploading images");
             }
@@ -117,6 +120,14 @@ const Servicedetails = () => {
 
     };
 
+    const handleInputChange1 = (e) => {
+        // Update the updatedData state when the user edits the form
+        const { name, value } = e.target;
+        setUpdatedData((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      };
     
 
     
@@ -187,6 +198,42 @@ const Servicedetails = () => {
                                                         <div className="ms-3 d-flex col-12">
                                                             <div className="col-4">
                                                                 <p className="fs-6">
+                                                                    <strong>Provider Name : </strong>
+                                                                </p>
+                                                            </div>
+                                                            <div className="col-8 pe-3">
+                                                                <p>
+                                                                    <span className="fs-6 ">{service.providername}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="ms-3 d-flex col-12">
+                                                            <div className="col-4">
+                                                                <p className="fs-6">
+                                                                    <strong>Provider Number : </strong>
+                                                                </p>
+                                                            </div>
+                                                            <div className="col-8 pe-3">
+                                                                <p>
+                                                                    <span className="fs-6 ">{service.providernumber}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="ms-3 d-flex col-12">
+                                                            <div className="col-4">
+                                                                <p className="fs-6">
+                                                                    <strong>Company Name : </strong>
+                                                                </p>
+                                                            </div>
+                                                            <div className="col-8 pe-3">
+                                                                <p>
+                                                                    <span className="fs-6 ">{service.providercompanyname}</span>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="ms-3 d-flex col-12">
+                                                            <div className="col-4">
+                                                                <p className="fs-6">
                                                                     <strong>Provider Email : </strong>
                                                                 </p>
                                                             </div>
@@ -223,24 +270,58 @@ const Servicedetails = () => {
                                                 <h5 className="card-title">Update Services</h5>
                                                 <form onSubmit={handleSubmit}>
                                                     <div className="row mb-3">
+                                                        <label className="col-sm-2 col-form-label">Services Name</label>
+                                                        <div className="col-sm-10">
+                                                            <div className="input-group mb-3">
+                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.servicename || service.addservices || ''} onChange={handleInputChange1} placeholder="Services Name" />
+                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-3">
                                                         <label className="col-sm-2 col-form-label">Services Details</label>
                                                         <div className="col-sm-10">
-                                                            <div className="form-floating mb-3">
-                                                                <input type="text" className="form-control" id="floatingInput" value={servicename} onChange={(e) => setServicename(e.target.value)} placeholder="Services Name" />
-                                                                <label htmlFor="floatingInput">Services Name</label>
-                                                            </div>
-                                                            <div className="form-floating mb-3">
-                                                                <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={servicedetails} onChange={(e) => setServicedetails(e.target.value)} style={{ height: 100 }} defaultValue={""} />
-                                                                <label htmlFor="floatingTextarea">Services Details</label>
+                                                        <div className="input-group mb-3">
+                                                                <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={updatedData.servicedetails || service.servicedetails || ''} onChange={handleInputChange1} style={{ height: 100 }} defaultValue={""} />
+                                                                {/* <label htmlFor="floatingTextarea">Services Details</label> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div className="row mb-3">
                                                         <label className="col-sm-2 col-form-label">Services Images</label>
                                                         <div className="col-sm-10">
-                                                            <div className="form-floating mb-3">
+                                                            <div className="input-group mb-3">
                                                                 <input type="file" className="form-control" id="floatingInput" name="images" onChange={handleFileChange} multiple />
-                                                                <label htmlFor="floatingInput">Services Images</label>
+                                                                {/* <label htmlFor="floatingInput">Services Images</label> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+
+                                                    <div className="row mb-3">
+                                                        <label className="col-sm-2 col-form-label">Provider Name</label>
+                                                        <div className="col-sm-10">
+                                                            <div className="input-group mb-3">
+                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providername || service.providername || ''} onChange={handleInputChange1} placeholder="Provider Name" />
+                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-3">
+                                                        <label className="col-sm-2 col-form-label fw-bold">Provider Number</label>
+                                                        <div className="col-sm-10">
+                                                            <div className="input-group mb-3">
+                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providernumber || service.providernumber || ''} onChange={handleInputChange1} placeholder="Provider Number" />
+                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="row mb-3">
+                                                        <label className="col-sm-2 col-form-label fw-bold">Company Name</label>
+                                                        <div className="col-sm-10">
+                                                            <div className="input-group mb-3">
+                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providercompanyname || service.providercompanyname || ''} onChange={handleInputChange1} placeholder="Provider Company Name" />
+                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -249,7 +330,7 @@ const Servicedetails = () => {
                                                         <div className="col-sm-10">
                                                             <div className="input-group mb-3">
                                                                 <span className="input-group-text" id="basic-addon1">@</span>
-                                                                <input type="email" className="form-control" placeholder="Provider Email" value={provideremailid} onChange={(e) => setProvideremailid(e.target.value)} aria-label="Provideremail" aria-describedby="basic-addon1" />
+                                                                <input type="email" className="form-control" placeholder="Provider Email"  value={updatedData.provideremail || service.provideremail || ''} onChange={handleInputChange1} aria-label="Provideremail" aria-describedby="basic-addon1" />
                                                             </div>
                                                         </div>
                                                     </div>

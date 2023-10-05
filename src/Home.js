@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
+import './App.css'
 
 import Header from "./components/Header";
 
 const Home = () => {
+    
     
     return (
         <>

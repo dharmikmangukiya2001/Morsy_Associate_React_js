@@ -53,7 +53,10 @@ const Showservices = () => {
                                                             <th>Services Number</th>
                                                             <th>Services Name</th>
                                                             <th>Services Details</th>
-                                                            <th>Provider Email</th>
+                                                            <th>Provider Name</th>
+                                                            {/* <th>Provider Number</th> */}
+                                                            <th>Company Name</th>
+                                                            {/* <th>Provider Email</th> */}
                                                             <th>Services Image</th>
                                                             <th>Show Details</th>
                                                         </tr>
@@ -68,7 +71,7 @@ const Showservices = () => {
 
                                                                         <tr>
                                                                             <td data-th="Supplier Code">
-                                                                                <p>{i + 1}</p>
+                                                                                <p className="fw-bold">{i + 1}</p>
                                                                             </td>
                                                                             <td data-th="Supplier Name">
                                                                                 <p>{item.addservices}</p>
@@ -77,14 +80,23 @@ const Showservices = () => {
                                                                                 <p>{item.servicedetails}</p>
                                                                             </td>
                                                                             <td data-th="Invoice Date">
-                                                                                <p>{item.provideremail}</p>
+                                                                                <p>{item.providername}</p>
                                                                             </td>
+                                                                            {/* <td data-th="Invoice Date">
+                                                                                <p>{item.providernumber}</p>
+                                                                            </td> */}
+                                                                            <td data-th="Invoice Date">
+                                                                                <p>{item.providercompanyname}</p>
+                                                                            </td>
+                                                                            {/* <td data-th="Invoice Date">
+                                                                                <p>{item.provideremail}</p>
+                                                                            </td> */}
                                                                             <td data-th="Due Date">
                                                                                 <img src={`http://localhost:8000/${item.servicesimg[0]}`} height={50} />
                                                                                
                                                                             </td>
                                                                             <td data-th="Net Amount">
-                                                                                <Link to={`/servicesdetails/${item._id}`}>
+                                                                                <Link to={`/admin_servicesdetails/${item._id}`}>
                                                                                     <button type="button" class="btn btn-primary btn-sm">Show All Details</button>
                                                                                 </Link>
                                                                             </td>

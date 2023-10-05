@@ -34,7 +34,7 @@ const Login = () => {
             console.log('tokenn::', token);
 
             // redirect login to home page
-            nevigate('/home')
+            nevigate('/admin_home')
 
           })
           .catch(function (error) {
