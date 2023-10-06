@@ -9,7 +9,7 @@ const Showservices = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get('http://192.168.1.111:8000/admin/servicesdata', { headers: { token } }).then(function (response) {
+        axios.get('http://192.168.0.111:8000/admin/servicesdata', { headers: { token } }).then(function (response) {
             // handle success
             
             console.log(response.data);
@@ -47,7 +47,7 @@ const Showservices = () => {
                                         <div className="card recent-sales overflow-auto">
                                             <div className="card-body">
                                                 <h5 className="card-title">Show All Services</h5>
-                                                <table class="rwd-table">
+                                                <table className="rwd-table">
                                                     <tbody>
                                                         <tr>
                                                             <th>Services Number</th>
@@ -97,7 +97,7 @@ const Showservices = () => {
                                                                             </td>
                                                                             <td data-th="Net Amount">
                                                                                 <Link to={`/admin_servicesdetails/${item._id}`}>
-                                                                                    <button type="button" class="btn btn-primary btn-sm">Show All Details</button>
+                                                                                    <button type="button" className="btn btn-primary btn-sm">Show All Details</button>
                                                                                 </Link>
                                                                             </td>
                                                                         </tr>

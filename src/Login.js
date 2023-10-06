@@ -22,7 +22,7 @@ const Login = () => {
         setPassword(password);
 
         // data get karavava mate
-        axios.post('http://192.168.1.111:8000/admin/logindata',userdetail).then(function (response) {
+        axios.post('http://192.168.0.111:8000/admin/logindata',userdetail).then(function (response) {
             // handle success
 
             // token localStorage ma set
@@ -45,35 +45,35 @@ const Login = () => {
     }
     return (
         <>
-            <section class="text-center text-lg-start">
+            <section className="text-center text-lg-start">
 
-                <div class="container py-4">
-                    <div class="row g-0 align-items-center">
-                        <div class="col-lg-6 mb-5 mb-lg-0">
-                            <div class="card cascading-right mm">
-                                <div class="card-body p-5 shadow-5 text-center">
+                <div className="container py-4">
+                    <div className="row g-0 align-items-center">
+                        <div className="col-lg-6 mb-5 mb-lg-0">
+                            <div className="card cascading-right mm">
+                                <div className="card-body p-5 shadow-5 text-center">
                                     <img src={require('./img/Morsy Associate 1.png')} style={{height:'80px'}}></img>
-                                    <h2 class="fw-bold mb-5 mt-5">Sign In now</h2>
+                                    <h2 className="fw-bold mb-5 mt-5">Sign In now</h2>
                                     <form onSubmit={handleSubmit}>
                                        
-                                        <div class="form-outline mb-4">
-                                            <input type="email" id="form3Example3" class="form-control" value={email} onChange={(e)=>setEmail(e.target.value)}/>
-                                            <label class="form-label" for="form3Example3" >Admin Email address</label>
+                                        <div className="form-outline mb-4">
+                                            <input type="email" id="form3Example3" className="form-control" value={email} onChange={(e)=>setEmail(e.target.value)}/>
+                                            <label className="form-label" for="form3Example3" >Admin Email address</label>
                                         </div>
 
-                                        <div class="form-outline mb-4">
-                                            <input type="password" id="form3Example4" class="form-control" vlaue={password} onChange={(e)=>setPassword(e.target.value)}/>
-                                            <label class="form-label" for="form3Example4" >Admin Password</label>
+                                        <div className="form-outline mb-4">
+                                            <input type="password" id="form3Example4" className="form-control" vlaue={password} onChange={(e)=>setPassword(e.target.value)}/>
+                                            <label className="form-label" for="form3Example4" >Admin Password</label>
                                         </div>
 
-                                        <div class="form-check d-flex justify-content-center mb-4">
-                                            <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                                            <label class="form-check-label" for="form2Example33">
+                                        <div className="form-check d-flex justify-content-center mb-4">
+                                            <input className="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
+                                            <label className="form-check-label" for="form2Example33">
                                                 Password Reminder
                                             </label>
                                         </div>
 
-                                        <button type="submit" class="btn btn-primary btn-block mb-4">
+                                        <button type="submit" className="btn btn-primary btn-block mb-4">
                                             Sign In  
                                         </button>
 
@@ -83,8 +83,8 @@ const Login = () => {
                             </div>
                         </div>
 
-                        <div class="bg-image col-lg-6 mb-5 mb-lg-0 d-none d-md-block">
-                            <img src={require('./img/login-img.jpg')} class="w-100 rounded-4 shadow-4"
+                        <div className="bg-image col-lg-6 mb-5 mb-lg-0 d-none d-md-block">
+                            <img src={require('./img/login-img.jpg')} className="w-100 rounded-4 shadow-4"
                                 alt="" />
                         </div>
                     </div>

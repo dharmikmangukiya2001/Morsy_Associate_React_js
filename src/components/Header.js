@@ -30,7 +30,7 @@ const Header = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get('http://192.168.1.111:8000/admin/home', { headers: { token } }).then(function (response) {
+        axios.get('http://192.168.0.111:8000/admin/home', { headers: { token } }).then(function (response) {
             // handle success
             console.log(response.data);
             setAdmins(response.data.admindata)

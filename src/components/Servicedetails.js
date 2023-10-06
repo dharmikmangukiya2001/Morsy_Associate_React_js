@@ -15,7 +15,7 @@ const Servicedetails = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get(`http://192.168.1.111:8000/admin/servicesdetails/${dd}`, { headers: { token } }).then(function (response) {
+        axios.get(`http://192.168.0.111:8000/admin/servicesdetails/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
 
             console.log(response.data);
@@ -36,7 +36,7 @@ const Servicedetails = () => {
     const deleteService = (e) => {
         e.preventDefault();
 
-        axios.get(`http://192.168.1.111:8000/admin/deleteservice/${dd}`, { headers: { token } }).then(function (response) {
+        axios.get(`http://192.168.0.111:8000/admin/deleteservice/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
             console.log(response.data);
             nevigate('/admin_showservices')
@@ -93,7 +93,7 @@ const Servicedetails = () => {
 
         try {
 
-            const response = fetch(`http://192.168.1.111:8000/admin/updateservice/${dd}`, {
+            const response = fetch(`http://192.168.0.111:8000/admin/updateservice/${dd}`, {
                 method: "PUT",
                 body: formData,
                 headers: { token }
