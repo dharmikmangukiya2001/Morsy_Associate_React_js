@@ -168,10 +168,10 @@ const Addservice = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div className="row mb-5 justify-content-center">
-                                                        <div className="col-sm-4">
+                                                    <div className="row mb-5 justify-content-end">
+                                                        <div className="col-sm-2">
                                                             <div className="input-group mb-3">
-                                                                <input type="submit" className="form-control bg-primary text-white" />
+                                                                <input type="submit" className="form-control bg-success text-white" />
                                                             </div>
                                                         </div>
                                                     </div>

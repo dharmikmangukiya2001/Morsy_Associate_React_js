@@ -277,8 +277,8 @@ const Header = () => {
                                 </a>
                             </li>
                             <li>
-                                <a href="tables-data.html" class="a-none">
-                                    <i className="bi bi-server fs-5" /><span>Show Providers</span>
+                                <a href="tables-data.html" class="a-none ps-0">
+                                    <Link className='a-none' to='/admin_showproviders'><i className="bi bi-server fs-5" /><span>Show Providers</span></Link>
                                 </a>
                             </li>
                         </ul>

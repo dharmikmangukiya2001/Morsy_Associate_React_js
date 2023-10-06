@@ -7,6 +7,7 @@ import Addservice from './components/Addservice.js'
 import Showservices from './components/Showservices.js'
 import Servicedetails from './components/Servicedetails.js'
 import Addprovider from './components/Addprovider';
+import Showprovider from './components/Showprovider';
 // import Admin from './components/Admin';
 import { Route, Routes } from 'react-router-dom';
 
@@ -24,6 +25,7 @@ function App() {
           <Route path="/admin_servicesdetails/:id" element={<Servicedetails />} />
 
           <Route path="/admin_addprovider" element={<Addprovider />} />
+          <Route path="/admin_showproviders" element={<Showprovider />} />
         {/* </Route> */}
       </Routes>
 
