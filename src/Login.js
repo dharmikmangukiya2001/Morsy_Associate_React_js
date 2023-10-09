@@ -52,8 +52,8 @@ const Login = () => {
                         <div className="col-lg-6 mb-5 mb-lg-0">
                             <div className="card cascading-right mm">
                                 <div className="card-body p-5 shadow-5 text-center">
-                                    <img src={require('./img/Morsy Associate 1.png')} style={{height:'80px'}}></img>
-                                    <h2 className="fw-bold mb-5 mt-5">Sign In now</h2>
+                                    <img src={require('./img/Logos.png')} style={{height:'80px'}}></img>
+                                    <h2 className="fw-bold fs-4 mb-5 mt-5">Sign In now</h2>
                                     <form onSubmit={handleSubmit}>
                                        
                                         <div className="form-outline mb-4">
@@ -84,7 +84,7 @@ const Login = () => {
                         </div>
 
                         <div className="bg-image col-lg-6 mb-5 mb-lg-0 d-none d-md-block">
-                            <img src={require('./img/login-img.jpg')} className="w-100 rounded-4 shadow-4"
+                            <img src={require('./img/login-img.jpg')} style={{height:"800px"}} className="w-100 rounded-4 shadow-4"
                                 alt="" />
                         </div>
                     </div>

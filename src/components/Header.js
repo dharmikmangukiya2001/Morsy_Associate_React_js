@@ -47,8 +47,8 @@ const Header = () => {
             <header id="header" className="header fixed-top d-flex align-items-center">
                 <div className="d-flex align-items-center justify-content-between">
                     <a href="index.html" className="logo d-flex align-items-center">
-                        <Link to="/admin_home"><img src="/assets/img/logo.png" width="250px" alt /></Link>
-                        {/* <img src={require('')} width="250px" alt /> */}
+                        <Link to="/admin_home"><img src="/assets/img/Logos.png" alt="Logos" /></Link>
+                        {/* <img src={require('../../public/assets/img/Logos.png')} width="250px" alt /> */}
                         {/* <span className="d-none d-lg-block">NiceAdmin</span> */}
                     </a>
                     <i className="bi bi-list toggle-sidebar-btn" onClick={toggleSidebar} />

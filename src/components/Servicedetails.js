@@ -9,7 +9,7 @@ const Servicedetails = () => {
 
     const [service, setService] = useState([])
     const id = useParams()
-    // console.log(id.id,"dddddddddddddddddddddddddddddddddddddddd");
+    // console.log(id.id,"dd");
     var dd = id.id
     // const id=localStorage.getItem('id')
     const token = localStorage.getItem("token");
@@ -18,8 +18,9 @@ const Servicedetails = () => {
         axios.get(`http://192.168.0.111:8000/admin/servicesdetails/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
 
-            console.log(response.data);
+            // console.log(response.data);
             setService(response.data.service);
+            setTempservice(response.data.service);
             // console.log("Service:", service);
 
         })
@@ -49,8 +50,8 @@ const Servicedetails = () => {
 
 
     // update page hides and shows
-    const [updates, setUpdates]= useState(false);
-    const onAddUpdate = ()=>{
+    const [updates, setUpdates] = useState(false);
+    const onAddUpdate = () => {
         setUpdates(true)
 
     }
@@ -59,12 +60,51 @@ const Servicedetails = () => {
 
 
     // update servicesssss
-    const [updatedData, setUpdatedData] = useState({});
-    const [servicename, setServicename] = useState('');
-    const [servicedetails, setServicedetails] = useState('');
-    const [files, setFiles] = useState('');
-    const [provideremailid, setProvideremailid] = useState('');
+    // const [updatedData, setUpdatedData] = useState({});
+    // const [servicename, setServicename] = useState('');
+    // const [servicedetails, setServicedetails] = useState('');
+    const [files, setSelectedFiles] = useState([]);
+    // const [files, setFiles] = useState([]);
+    // const [provideremailid, setProvideremailid] = useState('');
     // const [service,setService]=useState('');
+    const [changed, setChanged] = useState(false);
+    const [tempservice, setTempservice] = useState([])
+
+    useEffect(() => {
+        // console.log('services', service);
+        console.log('tempservice 1', tempservice);
+        // console.log(changed);
+    });
+
+    //const tempservice1 = {...tempservice};
+    // async function updatedServise(e) {
+    //     try {
+
+
+    //         const response = await fetch(`http://localhost:8000/admin/updateservice/${dd}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 // 'Content-Type': 'application/json',
+    //                 "Content-type": "multipart/form-data",
+    //                 token: token, // Make sure 'token' is defined and holds the appropriate value
+    //             },
+    //             body: JSON.stringify(tempservice1),
+    //         });
+
+    //         if (!response.ok) {
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+
+    //         const data = await response.json();
+    //         setTempservice(data);
+    //         setChanged(false);
+    //         console.log(data);
+    //     } catch (error) {
+    //         console.error("Error:", error);
+    //     }
+    // }
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -82,14 +122,11 @@ const Servicedetails = () => {
             formData.append("serviceimage", file);
         }
 
-        var sename = servicename
-        var sedetails = servicedetails
-        var premailid = provideremailid
-
-
-        formData.append("addservices", sename)
-        formData.append("servicedetails", sedetails)
-        formData.append("provideremail", premailid)
+        for (const [key, value] of Object.entries(tempservice)) {
+            console.log(`${key}: ${value}`);
+            formData.append(key, value);
+        }
+          
 
         try {
 
@@ -101,10 +138,6 @@ const Servicedetails = () => {
 
             if (response) {
                 console.log("Successfully uploaded images");
-                setServicename('');
-                setServicedetails('');
-                setFiles('');
-                setProvideremailid('');
                 nevigate('/admin_showservices')
             } else {
                 console.log("Error uploading images");
@@ -116,21 +149,14 @@ const Servicedetails = () => {
     }
     const handleFileChange = (event) => {
         const selectedFiles = Array.from(event.target.files);
-        setFiles(selectedFiles);
+        console.log("Selected files:", selectedFiles)
+        setSelectedFiles(selectedFiles);
 
     };
 
-    const handleInputChange1 = (e) => {
-        // Update the updatedData state when the user edits the form
-        const { name, value } = e.target;
-        setUpdatedData((prevData) => ({
-          ...prevData,
-          [name]: value,
-        }));
-      };
-    
 
-    
+
+
 
     return (
 
@@ -246,8 +272,8 @@ const Servicedetails = () => {
                                                         <div className="ms-3 d-flex col-12 mb-2">
                                                             <div className="pe-4 col-12 text-end">
                                                                 <Link ><button onClick={deleteService} className="btn btn-danger px-5 me-2 mb-3">Delete</button></Link>
-                                                               
-                                                                <Link><button id="updateButton" onClick={()=>onAddUpdate()} className="btn btn-primary me-1 px-5 mb-3">Update</button></Link>
+
+                                                                <Link><button id="updateButton" onClick={() => onAddUpdate()} className="btn btn-primary me-1 px-5 mb-3">Update</button></Link>
                                                             </div>
 
                                                         </div>
@@ -262,98 +288,108 @@ const Servicedetails = () => {
                             {
                                 updates ? (
                                     <>
-                                         <div className="col-lg-6">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <div className="card recent-sales overflow-auto">
-                                            <div className="card-body">
-                                                <h5 className="card-title">Update Services</h5>
-                                                <form onSubmit={handleSubmit}>
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label">Services Name</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.servicename || service.addservices || ''} onChange={handleInputChange1} placeholder="Services Name" />
-                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label">Services Details</label>
-                                                        <div className="col-sm-10">
-                                                        <div className="input-group mb-3">
-                                                                <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={updatedData.servicedetails || service.servicedetails || ''} onChange={handleInputChange1} style={{ height: 100 }} defaultValue={""} />
-                                                                {/* <label htmlFor="floatingTextarea">Services Details</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label">Services Images</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <input type="file" className="form-control" id="floatingInput" name="images" onChange={handleFileChange} multiple />
-                                                                {/* <label htmlFor="floatingInput">Services Images</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
+                                        <div className="col-lg-6">
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <div className="card recent-sales overflow-auto">
+                                                        <div className="card-body">
+                                                            <h5 className="card-title">Update Services</h5>
+                                                            <form>
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label">Services Name</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <input type="text" className="form-control" id="floatingInput" value={tempservice.addservices} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, addservices: e.target.value, }) }} placeholder="Services Name" />
+                                                                            {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label">Services Details</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={tempservice.servicedetails} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, servicedetails: e.target.value, }) }} style={{ height: 100 }} defaultValue={""} />
+                                                                            {/* <label htmlFor="floatingTextarea">Services Details</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label">Services Images</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <input type="file" className="form-control" id="floatingInput" name="images" onChange={handleFileChange} multiple />
+                                                                            {/* <label htmlFor="floatingInput">Services Images</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label">Provider Name</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providername || service.providername || ''} onChange={handleInputChange1} placeholder="Provider Name" />
-                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label fw-bold">Provider Number</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providernumber || service.providernumber || ''} onChange={handleInputChange1} placeholder="Provider Number" />
-                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-3">
-                                                        <label className="col-sm-2 col-form-label fw-bold">Company Name</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <input type="text" className="form-control" id="floatingInput" value={updatedData.providercompanyname || service.providercompanyname || ''} onChange={handleInputChange1} placeholder="Provider Company Name" />
-                                                                {/* <label htmlFor="floatingInput">Services Name</label> */}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-5">
-                                                        <label className="col-sm-2 col-form-label">Provider Details</label>
-                                                        <div className="col-sm-10">
-                                                            <div className="input-group mb-3">
-                                                                <span className="input-group-text" id="basic-addon1">@</span>
-                                                                <input type="email" className="form-control" placeholder="Provider Email"  value={updatedData.provideremail || service.provideremail || ''} onChange={handleInputChange1} aria-label="Provideremail" aria-describedby="basic-addon1" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div className="row mb-5 justify-content-center">
-                                                        <div className="col-sm-4">
-                                                            <div className="input-group mb-3">
-                                                            <input type="submit" className="form-control bg-primary text-white" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </form>{/* End General Form Elements */}
 
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label">Provider Name</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <input type="text" className="form-control" id="floatingInput" value={tempservice.providername} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, providername: e.target.value, }) }} placeholder="Provider Name" />
+                                                                            {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label fw-bold">Provider Number</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <input type="text" className="form-control" id="floatingInput" value={tempservice.providernumber} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, providernumber: e.target.value, }) }} placeholder="Provider Number" />
+                                                                            {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-3">
+                                                                    <label className="col-sm-2 col-form-label fw-bold">Company Name</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <input type="text" className="form-control" id="floatingInput" value={tempservice.providercompanyname} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, providercompanyname: e.target.value, }) }} placeholder="Provider Company Name" />
+                                                                            {/* <label htmlFor="floatingInput">Services Name</label> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-5">
+                                                                    <label className="col-sm-2 col-form-label">Provider Email</label>
+                                                                    <div className="col-sm-10">
+                                                                        <div className="input-group mb-3">
+                                                                            <span className="input-group-text" id="basic-addon1">@</span>
+                                                                            <input type="email" className="form-control" placeholder="Provider Email" value={tempservice.provideremail} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, provideremail: e.target.value, }) }} aria-label="Provideremail" aria-describedby="basic-addon1" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row mb-5 justify-content-center">
+                                                                    <div className="col-sm-4">
+                                                                        <div className="input-group mb-3">
+                                                                            {changed ? (
+                                                                                <>
+                                                                                    <button onClick={(e) => {
+                                                                                        setTempservice({ ...service });
+                                                                                        setChanged(false);
+                                                                                    }}
+                                                                                        className="btn btn-dark">Cancel</button>
+                                                                                    <button onClick={handleSubmit} className="btn btn-dark">Update</button>
+                                                                                </>
+                                                                            ) : null}
+                                                                            {/* <input type="submit" className="form-control bg-primary text-white" /> */}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>{/* End General Form Elements */}
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                             </div>
-
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
                                     </>
-                                ): null
+                                ) : null
                             }
-                           
-                            
+
+
                         </div>
                     </section>
                 </main>{/* End #main */}

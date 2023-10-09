@@ -97,7 +97,7 @@ const Showservices = () => {
                                                                             </td>
                                                                             <td data-th="Net Amount">
                                                                                 <Link to={`/admin_servicesdetails/${item._id}`}>
-                                                                                    <button type="button" className="btn btn-primary btn-sm">Show All Details</button>
+                                                                                    <button type="button" className="btn btn-danger btn-sm">Show All Details</button>
                                                                                 </Link>
                                                                             </td>
                                                                         </tr>
