@@ -5,6 +5,43 @@ import axios from 'axios';
 
 const Addprovider = () => {
 
+    const [providername, setProvidername] = useState('');
+    const [providernumber, setProvidernumber] = useState('');
+    const [provideremailid, setProvideremailid] = useState('');
+    const [providerbod, setProviderbod] = useState('');
+    const [provideraddress, setProvideraddress] = useState('');
+    // Bussiness Details
+    const [bussinessname, setBussinessname] = useState('');
+    const [bussinessnumber, setBussinessnumber] = useState('');
+    const [bussinessemailid, setBussinessemailid] = useState('');
+    const [bussinessdetails, setBussinessdetails] = useState('');
+    const [bussinesswebsiteurl, setBussinesswebsiteurl] = useState('');
+    const [bussinessgstnumber, setBussinessgstnumber] = useState('');
+    const [bussinesstype, setBussinesstype] = useState('');
+    const [bussinesstdsdetails, setBussinesstdsdetails] = useState('');
+    const [bussinesspancardnumber, setBussinesspancardnumber] = useState('');
+    const [bussinesscategory, setBussinesscategory] = useState('');
+    const [bussinessaddress, setBussinessaddress] = useState('');
+    const [collaborationdetails, setCollaborationdetails] = useState('');
+    // Sales Details
+    const [salespersonname, setSalespersonname] = useState('');
+    const [salespersonnumber, setSalespersonnumber] = useState('');
+    const [salespersonemailid, setSalespersonemailid] = useState('');
+    const [salespersonposition, setSalespersonposition] = useState('');
+    // Bank Details
+    const [bankname, setBankname] = useState('');
+    const [bankaccountnumber, setBankaccountnumber] = useState('');
+    const [bankifsccode, setBankifsccode] = useState('');
+    const [bankbranchname, setBankbranchname] = useState('');
+    // Files
+    const [img, setImg] = useState([])
+
+    // Main object
+
+    // Token
+    const token = localStorage.getItem('token');
+
+
     // ADD BUSINESS DIV SHOW SELECT INPUT
     const [seletedOption, setSeletedOption] = useState(false);
     const handleAdd = (e) => {
@@ -40,15 +77,101 @@ const Addprovider = () => {
     }
     // ADD IMAGE DOCUMENT DIV END
 
+    const data = {
+        providername,
+        providernumber,
+        provideremailid,
+        providerbod,
+        provideraddress,
+        bussinessname,
+        bussinessnumber,
+        bussinessemailid,
+        bussinessdetails,
+        bussinesswebsiteurl,
+        bussinessgstnumber,
+        bussinesstype,
+        bussinesstdsdetails,
+        bussinesspancardnumber,
+        bussinesscategory,
+        bussinessaddress,
+        collaborationdetails,
+        salespersonname,
+        salespersonnumber,
+        salespersonemailid,
+        salespersonposition,
+        bankname,
+        bankaccountnumber,
+        bankifsccode,
+        bankbranchname,
+    }
 
 
 
 
-    
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const provider = {
+            providerdata: data
+        }
+        if (img.length === 0) {
+            console.log("Please select at least one file");
+            return;
+        }
+        const formData = new FormData();
+        for (const file of img) {
+            formData.append("providerimg", file);
+        }
+
+
+        formData.append("providername", data.providername);
+        formData.append("providernumber", data.providernumber);
+        formData.append("provideremailid", data.provideremailid);
+        formData.append("providerbod", data.providerbod);
+        formData.append("provideraddress", data.provideraddress);
+        formData.append("bussinessname", data.bussinessname);
+        formData.append("bussinessnumber", data.bussinessnumber);
+        formData.append("bussinessemailid", data.bussinessemailid);
+        formData.append("bussinessdetails", data.bussinessdetails);
+        formData.append("bussinessgstnumber", data.bussinessgstnumber);
+        formData.append("bussinesswebsiteurl", data.bussinesswebsiteurl);
+        formData.append("bussinesstype", data.bussinesstype);
+        formData.append("bussinesstdsdetails", data.bussinesstdsdetails);
+        formData.append("bussinesspancardnumber", data.bussinesspancardnumber);
+        formData.append("bussinesscategory", data.bussinesscategory);
+        formData.append("bussinessaddress", data.bussinessaddress);
+        formData.append("salespersonname", data.salespersonname);
+        formData.append("salespersonnumber", data.salespersonnumber);
+        formData.append("salespersonemailid", data.salespersonemailid);
+        formData.append("salespersonposition", data.salespersonposition);
+        formData.append("bankname", data.bankname);
+        formData.append("bankaccountnumber", data.bankaccountnumber);
+        formData.append("bankifsccode", data.bankifsccode);
+        formData.append("bankbranchname", data.bankbranchname);
+
+        try {
+
+            axios.post(`${process.env.REACT_APP_URL}/admin/addprovider`, formData, { headers: { token } })
+                .then((responce) => {
+                    console.log(responce.data);
+                }).catch((err) => {
+                    console.log(err);
+                })
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+    const handleFileChange = (event) => {
+        const selectedFiles = event.target.files;
+
+        // Convert the selectedFiles NodeList to an array and update the state
+        setImg((prevFiles) => [...prevFiles, ...Array.from(selectedFiles)]);
+        console.log(img);
+    };
 
     return (
         <>
-            <Header />
+        <Header/>
             <div>
                 <main id="main" className='main'>
                     <div className='pagetitle'>
@@ -66,7 +189,7 @@ const Addprovider = () => {
                                 {/* <div className='card recent-sales overflow-auto'>
                                     <div className='card-body'> */}
 
-                                <form>
+                                <form onSubmit={handleSubmit}>
                                     <div className='card recent-sales overflow-auto'>
                                         <div className='card-body'>
                                             <h5 className='card-title mb-5'>Add Provider <span>| Today</span></h5>
@@ -78,7 +201,8 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Profile Photos <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3'>
-                                                            <input type='file' className='form-control' placeholder='Provider Name' />
+                                                            <input type='file' onChange={handleFileChange}
+                                                                multiple className='form-control' placeholder='Provider Name' />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -86,7 +210,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Name <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='text' className='form-control' placeholder='Provider Name' />
+                                                            <input type='text' className='form-control' value={providername} onChange={(e) => setProvidername(e.target.value)} placeholder='Provider Name' />
                                                             <label htmlFor="floatingTextarea">Provider Name</label>
                                                         </div>
                                                     </div>
@@ -95,7 +219,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Numbar <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='text' className='form-control' placeholder='Provider Numbar' />
+                                                            <input type='text' className='form-control' value={providernumber} onChange={(e) => setProvidernumber(e.target.value)} placeholder='Provider Numbar' />
                                                             <label htmlFor="floatingTextarea">Provider Number</label>
                                                         </div>
                                                     </div>
@@ -104,7 +228,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Email ID <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='text' className='form-control' placeholder='Provider Email ID' />
+                                                            <input type='text' className='form-control' value={provideremailid} onChange={(e) => setProvideremailid(e.target.value)} placeholder='Provider Email ID' />
                                                             <label htmlFor="floatingTextarea">Provider Email ID</label>
                                                         </div>
                                                     </div>
@@ -113,7 +237,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider B.O.D. <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='date' className='form-control' placeholder='Provider B.O.D' />
+                                                            <input type='date' className='form-control' value={providerbod} onChange={(e) => setProviderbod(e.target.value)} placeholder='Provider B.O.D' />
                                                             <label htmlFor="floatingTextarea">Provider B.O.D.</label>
                                                         </div>
                                                     </div>
@@ -122,7 +246,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Address <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='text' className='form-control' placeholder='Provider Address' />
+                                                            <input type='text' className='form-control' value={provideraddress} onChange={(e) => setProvideraddress(e.target.value)} placeholder='Provider Address' />
                                                             <label htmlFor="floatingTextarea">Provider Address</label>
                                                         </div>
                                                     </div>
@@ -171,7 +295,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Name <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Name' />
+                                                                        <input type='text' className='form-control' value={bussinessname} onChange={(e) => setBussinessname(e.target.value)} placeholder='Business Name' />
                                                                         <label htmlFor="floatingTextarea">Business Name</label>
                                                                     </div>
                                                                 </div>
@@ -180,7 +304,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Numbar <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Numbar' />
+                                                                        <input type='text' className='form-control' value={bussinessnumber} onChange={(e) => setBussinessnumber(e.target.value)} placeholder='Business Numbar' />
                                                                         <label htmlFor="floatingTextarea">Business Number</label>
                                                                     </div>
                                                                 </div>
@@ -189,7 +313,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Email ID <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Email ID' />
+                                                                        <input type='text' className='form-control' value={bussinessemailid} onChange={(e) => setBussinessemailid(e.target.value)} placeholder='Business Email ID' />
                                                                         <label htmlFor="floatingTextarea">Business Email ID</label>
                                                                     </div>
                                                                 </div>
@@ -198,7 +322,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Website Url <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Website Url' />
+                                                                        <input type='text' className='form-control' value={bussinesswebsiteurl} onChange={(e) => setBussinesswebsiteurl(e.target.value)} placeholder='Business Website Url' />
                                                                         <label htmlFor="floatingTextarea">Business Email ID</label>
                                                                     </div>
                                                                 </div>
@@ -207,7 +331,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Details <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Details' />
+                                                                        <input type='text' className='form-control' value={bussinessdetails} onChange={(e) => setBussinessdetails(e.target.value)} placeholder='Business Details' />
                                                                         <label htmlFor="floatingTextarea">Business Details</label>
                                                                     </div>
                                                                 </div>
@@ -216,7 +340,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Brosar <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' className='form-control' placeholder='Business Brosar' />
+                                                                        <input type='file' onChange={handleFileChange} multiple className='form-control' placeholder='Business Brosar' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -224,7 +348,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Address <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Address' />
+                                                                        <input type='text' className='form-control' value={bussinessaddress} onChange={(e) => setBussinessaddress(e.target.value)} placeholder='Business Address' />
                                                                         <label htmlFor="floatingTextarea">Business Address</label>
                                                                     </div>
                                                                 </div>
@@ -233,7 +357,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business GST IN Numbar <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business GST IN Numbar' />
+                                                                        <input type='text' className='form-control' value={bussinessgstnumber} onChange={(e) => setBussinessgstnumber(e.target.value)} placeholder='Business GST IN Numbar' />
                                                                         <label htmlFor="floatingTextarea">Business GST IN Numbar</label>
                                                                     </div>
                                                                 </div>
@@ -242,7 +366,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business TDS Details <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business TDS Details' />
+                                                                        <input type='text' className='form-control' value={bussinesstdsdetails} onChange={(e) => setBussinesstdsdetails(e.target.value)} placeholder='Business TDS Details' />
                                                                         <label htmlFor="floatingTextarea">Business TDS Details</label>
                                                                     </div>
                                                                 </div>
@@ -251,7 +375,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Pan Card Number</label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Pan Card Number' />
+                                                                        <input type='text' className='form-control' value={bussinesspancardnumber} onChange={(e) => setBussinesspancardnumber(e.target.value)} placeholder='Business Pan Card Number' />
                                                                         <label htmlFor="floatingTextarea">Business Pan Card Number</label>
                                                                     </div>
                                                                 </div>
@@ -260,7 +384,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Category <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Category' />
+                                                                        <input type='text' className='form-control' value={bussinesscategory} onChange={(e) => setBussinesscategory(e.target.value)} placeholder='Business Category' />
                                                                         <label htmlFor="floatingTextarea">Business Category</label>
                                                                     </div>
                                                                 </div>
@@ -269,7 +393,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Type <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Business Type' />
+                                                                        <input type='text' className='form-control' value={bussinesstype} onChange={(e) => setBussinesstype(e.target.value)} placeholder='Business Type' />
                                                                         <label htmlFor="floatingTextarea">Business Type</label>
                                                                     </div>
                                                                 </div>
@@ -279,7 +403,7 @@ const Addprovider = () => {
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
                                                                         {/* <input type='text' className='form-control' placeholder='Business Type' /> */}
-                                                                        <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style={{height: 100}} defaultValue={""} />
+                                                                        <textarea className="form-control" value={collaborationdetails} onChange={(e) => setCollaborationdetails(e.target.value)} placeholder="Leave a comment here" id="floatingTextarea2" style={{ height: 100 }} defaultValue={""} />
 
                                                                         <label for="floatingTextarea2">Comments</label>
                                                                     </div>
@@ -313,7 +437,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Sales Person Name </label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Sales Person Name' />
+                                                                        <input type='text' className='form-control' value={salespersonname} onChange={(e) => setSalespersonname(e.target.value)} placeholder='Sales Person Name' />
                                                                         <label htmlFor="floatingTextarea">Sales Person Name</label>
                                                                     </div>
                                                                 </div>
@@ -322,7 +446,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Sales Person Number </label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Sales Person Number' />
+                                                                        <input type='text' className='form-control' value={salespersonnumber} onChange={(e) => setSalespersonnumber(e.target.value)} placeholder='Sales Person Number' />
                                                                         <label htmlFor="floatingTextarea">Sales Person Number</label>
                                                                     </div>
                                                                 </div>
@@ -331,7 +455,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Sales Person Email ID </label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Sales Person Email ID' />
+                                                                        <input type='text' className='form-control' value={salespersonemailid} onChange={(e) => setSalespersonemailid(e.target.value)} placeholder='Sales Person Email ID' />
                                                                         <label htmlFor="floatingTextarea">Sales Person Email ID</label>
                                                                     </div>
                                                                 </div>
@@ -340,7 +464,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Sales Person Position </label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Sales Person Position' />
+                                                                        <input type='text' className='form-control' value={salespersonposition} onChange={(e) => setSalespersonposition(e.target.value)} placeholder='Sales Person Position' />
                                                                         <label htmlFor="floatingTextarea">Sales Person Position</label>
                                                                     </div>
                                                                 </div>
@@ -370,7 +494,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Bank Name <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Bank Name' />
+                                                                        <input type='text' className='form-control' value={bankname} onChange={(e) => setBankname(e.target.value)} placeholder='Bank Name' />
                                                                         <label htmlFor="floatingTextarea">Bank Name</label>
                                                                     </div>
                                                                 </div>
@@ -379,7 +503,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Bank Account Number <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Banck Account Number' />
+                                                                        <input type='text' className='form-control' value={bankaccountnumber} onChange={(e) => setBankaccountnumber(e.target.value)} placeholder='Banck Account Number' />
                                                                         <label htmlFor="floatingTextarea">Banck Account Number</label>
                                                                     </div>
                                                                 </div>
@@ -388,7 +512,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Bank IFSC Code <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Bank IFSC Code' />
+                                                                        <input type='text' className='form-control' value={bankifsccode} onChange={(e) => setBankifsccode(e.target.value)} placeholder='Bank IFSC Code' />
                                                                         <label htmlFor="floatingTextarea">Bank IFSC Code</label>
                                                                     </div>
                                                                 </div>
@@ -397,7 +521,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Bank Branch Name<span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' placeholder='Bank Branch Name' />
+                                                                        <input type='text' className='form-control' value={bankbranchname} onChange={(e) => setBankbranchname(e.target.value)} placeholder='Bank Branch Name' />
                                                                         <label htmlFor="floatingTextarea">Bank Branch Name</label>
                                                                     </div>
                                                                 </div>
@@ -427,7 +551,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Aadharcard Image JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' className='form-control' placeholder='Aadharcard Image JPEG' />
+                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Aadharcard Image JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -435,7 +559,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Pancard Image JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 '>
-                                                                        <input type='file' className='form-control' placeholder='Pancard Image JPEG' />
+                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Pancard Image JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -443,7 +567,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>GST File JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 '>
-                                                                        <input type='file' className='form-control' placeholder='GST File JPEG' />
+                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='GST File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -451,7 +575,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>TDS File JPEG<span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' className='form-control' placeholder='TDS File JPEG' />
+                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='TDS File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -459,7 +583,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Agreement File JPEG<span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' className='form-control' placeholder='Agreement File JPEG' />
+                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Agreement File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -496,4 +620,5 @@ const Addprovider = () => {
     )
 
 }
+
 export default Addprovider
