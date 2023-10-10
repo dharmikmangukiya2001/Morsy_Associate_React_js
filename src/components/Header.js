@@ -30,9 +30,9 @@ const Header = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get('http://192.168.0.111:8000/admin/home', { headers: { token } }).then(function (response) {
+        axios.get(`${process.env.REACT_APP_URL}/admin/home`, { headers: { token } }).then(function (response) {
             // handle success
-            console.log(response.data);
+            // console.log(response.data);
             setAdmins(response.data.admindata)
             // console.log("admin:", admins);
 

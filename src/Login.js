@@ -4,11 +4,11 @@ import './css/style.css';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Login = () => {
+//  console.log(process.env.REACT_APP_URL);
 
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const [users, setUsers]=useState([])
-
     const nevigate = useNavigate();
 
     const handleSubmit = (e) => {
@@ -22,7 +22,7 @@ const Login = () => {
         setPassword(password);
 
         // data get karavava mate
-        axios.post('http://192.168.0.111:8000/admin/logindata',userdetail).then(function (response) {
+        axios.post(`${process.env.REACT_APP_URL}/admin/logindata`,userdetail).then(function (response) {
             // handle success
 
             // token localStorage ma set

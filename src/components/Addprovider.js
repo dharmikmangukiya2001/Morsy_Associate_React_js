@@ -12,28 +12,12 @@ const Addprovider = () => {
         setSeletedOption(true)
     };
     // ADD BUSINESS DIV END
-
-
-
     // SELECT OPTION FOR SHOW DIV DATA
     const [associate, setAssociate] = useState('')
-    // const getSecondSelectOptions = () => {
-    //     switch (associate) {
-    //         case 'Property':
-    //             return [
-    //                 <option className='rounded-top' key="property" value="property">Property</option>,
-    //                 <option className='rounded-top' key="design" value="design">design</option>,
-    //             ];
-    //         default: return [];
-    //     }
-    // };
     const handleSecondSelectChange = (e) => {
         setAssociate(e.target.value);
     };
     // SELECT OPTION END
-
-
-
     // ADD SELES PROSAN DIV SHOW
     const [selectedSelesOption, setSelectedSelesOption] = useState(false);
     const personAdd = (e) => {
@@ -41,9 +25,6 @@ const Addprovider = () => {
         setSelectedSelesOption(true)
     };
     // ADD SELES PROSAN DIV END
-
-
-
     // ADD BANK DETAILS DIV SHOW
     const [selectedBankOption, setSelectedBankOption] = useState(false);
     const bankAdd = (e) => {
@@ -51,9 +32,6 @@ const Addprovider = () => {
         setSelectedBankOption(true);
     };
     // ADD BANK DETAILS DIV END
-
-
-
     // ADD IMAGE DOCUMENT DIV SHOW
     const [selectedDocument, setSelectedDocument] = useState(false);
     const documentAdd = (e) => {
@@ -61,6 +39,12 @@ const Addprovider = () => {
         setSelectedDocument(true);
     }
     // ADD IMAGE DOCUMENT DIV END
+
+
+
+
+
+    
 
     return (
         <>

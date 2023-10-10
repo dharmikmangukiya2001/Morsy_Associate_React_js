@@ -15,7 +15,7 @@ const Servicedetails = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get(`http://192.168.0.111:8000/admin/servicesdetails/${dd}`, { headers: { token } }).then(function (response) {
+        axios.get(`${process.env.REACT_APP_URL}/admin/servicesdetails/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
 
             // console.log(response.data);
@@ -37,7 +37,7 @@ const Servicedetails = () => {
     const deleteService = (e) => {
         e.preventDefault();
 
-        axios.get(`http://192.168.0.111:8000/admin/deleteservice/${dd}`, { headers: { token } }).then(function (response) {
+        axios.get(`${process.env.REACT_APP_URL}/admin/deleteservice/${dd}`, { headers: { token } }).then(function (response) {
             // handle success
             console.log(response.data);
             nevigate('/admin_showservices')
@@ -57,54 +57,15 @@ const Servicedetails = () => {
     }
 
 
-
-
     // update servicesssss
-    // const [updatedData, setUpdatedData] = useState({});
-    // const [servicename, setServicename] = useState('');
-    // const [servicedetails, setServicedetails] = useState('');
+   
     const [files, setSelectedFiles] = useState([]);
-    // const [files, setFiles] = useState([]);
-    // const [provideremailid, setProvideremailid] = useState('');
-    // const [service,setService]=useState('');
     const [changed, setChanged] = useState(false);
     const [tempservice, setTempservice] = useState([])
 
     useEffect(() => {
-        // console.log('services', service);
         console.log('tempservice 1', tempservice);
-        // console.log(changed);
     });
-
-    //const tempservice1 = {...tempservice};
-    // async function updatedServise(e) {
-    //     try {
-
-
-    //         const response = await fetch(`http://localhost:8000/admin/updateservice/${dd}`, {
-    //             method: 'PUT',
-    //             headers: {
-    //                 // 'Content-Type': 'application/json',
-    //                 "Content-type": "multipart/form-data",
-    //                 token: token, // Make sure 'token' is defined and holds the appropriate value
-    //             },
-    //             body: JSON.stringify(tempservice1),
-    //         });
-
-    //         if (!response.ok) {
-    //             throw new Error(`HTTP error! Status: ${response.status}`);
-    //         }
-
-    //         const data = await response.json();
-    //         setTempservice(data);
-    //         setChanged(false);
-    //         console.log(data);
-    //     } catch (error) {
-    //         console.error("Error:", error);
-    //     }
-    // }
-
-
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -130,7 +91,7 @@ const Servicedetails = () => {
 
         try {
 
-            const response = fetch(`http://192.168.0.111:8000/admin/updateservice/${dd}`, {
+            const response = fetch(`${process.env.REACT_APP_URL}/admin/updateservice/${dd}`, {
                 method: "PUT",
                 body: formData,
                 headers: { token }
@@ -193,7 +154,7 @@ const Servicedetails = () => {
                                                             </div>
                                                             <div className="col-8">
 
-                                                                <img src={`http://localhost:8000/${service.servicesimg}`} height={150} />
+                                                                <img src={`${process.env.REACT_APP_URL}/${service.servicesimg}`} height={150} />
 
                                                             </div>
                                                         </div>

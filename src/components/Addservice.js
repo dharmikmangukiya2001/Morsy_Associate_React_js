@@ -51,7 +51,7 @@ const Addservice = () => {
 
         try {
 
-            const response = fetch("http://192.168.0.111:8000/admin/addservices", {
+            const response = fetch(`${process.env.REACT_APP_URL}/admin/addservices`, {
                 method: "POST",
                 body: formData,
                 headers: { token }

@@ -9,7 +9,7 @@ const Showservices = () => {
     const token = localStorage.getItem("token");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get('http://192.168.0.111:8000/admin/servicesdata', { headers: { token } }).then(function (response) {
+        axios.get(`${process.env.REACT_APP_URL}/admin/servicesdata`, { headers: { token } }).then(function (response) {
             // handle success
             
             console.log(response.data);
@@ -92,7 +92,7 @@ const Showservices = () => {
                                                                                 <p>{item.provideremail}</p>
                                                                             </td> */}
                                                                             <td data-th="Due Date">
-                                                                                <img src={`http://localhost:8000/${item.servicesimg[0]}`} height={50} />
+                                                                                <img src={`${process.env.REACT_APP_URL}/${item.servicesimg[0]}`} height={50} />
                                                                                
                                                                             </td>
                                                                             <td data-th="Net Amount">
