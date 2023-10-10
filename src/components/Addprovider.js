@@ -139,6 +139,7 @@ const Addprovider = () => {
         formData.append("bussinesspancardnumber", data.bussinesspancardnumber);
         formData.append("bussinesscategory", data.bussinesscategory);
         formData.append("bussinessaddress", data.bussinessaddress);
+        formData.append("collaborationdetails", data.collaborationdetails);
         formData.append("salespersonname", data.salespersonname);
         formData.append("salespersonnumber", data.salespersonnumber);
         formData.append("salespersonemailid", data.salespersonemailid);
@@ -323,7 +324,7 @@ const Addprovider = () => {
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
                                                                         <input type='text' className='form-control' value={bussinesswebsiteurl} onChange={(e) => setBussinesswebsiteurl(e.target.value)} placeholder='Business Website Url' />
-                                                                        <label htmlFor="floatingTextarea">Business Email ID</label>
+                                                                        <label htmlFor="floatingTextarea">Business Website Url</label>
                                                                     </div>
                                                                 </div>
                                                             </div>

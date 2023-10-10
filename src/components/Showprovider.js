@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Header from "./Header.js";
 import axios from "axios";
+import { Link } from "react-router-dom";
+
 import { logDOM } from "@testing-library/react";
 
 const Showprovider = () => {
@@ -10,7 +12,7 @@ const Showprovider = () => {
 
 
     useEffect(() => {
-        axios.get('http://192.168.0.111:8000/admin/providerdata').then(function (response) {
+        axios.get('http://192.168.0.111:8000/admin/providerdata',{headers:{token}}).then(function (response) {
             // handle success
             console.log(response.data);
             setProvider(response.data.providerdata);
@@ -77,7 +79,11 @@ const Showprovider = () => {
                                                                         <td>{item.bussinessname}</td>
                                                                         <td>{item.bussinesscategory}</td>
                                                                         <td>{item.bussinessdetails}</td>
-                                                                        <td><button className="btn btn-danger btn-sm" type="button">Show All Details</button></td>
+                                                                        <td data-th="Net Amount">
+                                                                        <Link to={`/admin_providerdetails/${item._id}`}>
+                                                                            <button type="button" className="btn btn-danger btn-sm">Show All Details</button>
+                                                                        </Link>
+                                                                    </td>
                                                                     </tr>
 
                                                                 ))}
