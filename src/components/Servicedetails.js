@@ -256,8 +256,9 @@ const Servicedetails = () => {
                                                         <div className="card-body">
                                                             <h5 className="card-title">Update Services</h5>
                                                             <form>
+                                                                <div className="border shadow-sm p-3 mb-5 bg-body rounded">
                                                                 <div className="row mb-3">
-                                                                    <label className="col-sm-2 col-form-label">Services Name</label>
+                                                                    <label className="col-sm-2 fw-bold col-form-label">Services Name</label>
                                                                     <div className="col-sm-10">
                                                                         <div className="input-group mb-3">
                                                                             <input type="text" className="form-control" id="floatingInput" value={tempservice.addservices} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, addservices: e.target.value, }) }} placeholder="Services Name" />
@@ -266,7 +267,7 @@ const Servicedetails = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div className="row mb-3">
-                                                                    <label className="col-sm-2 col-form-label">Services Details</label>
+                                                                    <label className="col-sm-2 fw-bold col-form-label">Services Details</label>
                                                                     <div className="col-sm-10">
                                                                         <div className="input-group mb-3">
                                                                             <textarea className="form-control" placeholder="Leave a comment here" id="floatingTextarea" value={tempservice.servicedetails} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, servicedetails: e.target.value, }) }} style={{ height: 100 }} defaultValue={""} />
@@ -275,10 +276,10 @@ const Servicedetails = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div className="row mb-3">
-                                                                    <label className="col-sm-2 col-form-label">Services Images</label>
+                                                                    <label className="col-sm-2 fw-bold col-form-label">Services Images</label>
                                                                     <div className="col-sm-10">
                                                                         <div className="input-group mb-3">
-                                                                            <input type="file" className="form-control" id="floatingInput" name="images" onChange={handleFileChange} multiple />
+                                                                            <input type="file" className="form-control" id="floatingInput" name="images" onChange={handleFileChange}  />
                                                                             {/* <label htmlFor="floatingInput">Services Images</label> */}
                                                                         </div>
                                                                     </div>
@@ -286,7 +287,7 @@ const Servicedetails = () => {
 
 
                                                                 <div className="row mb-3">
-                                                                    <label className="col-sm-2 col-form-label">Provider Name</label>
+                                                                    <label className="col-sm-2 fw-bold col-form-label">Provider Name</label>
                                                                     <div className="col-sm-10">
                                                                         <div className="input-group mb-3">
                                                                             <input type="text" className="form-control" id="floatingInput" value={tempservice.providername} onChange={(e) => { setChanged(true); setTempservice({ ...tempservice, providername: e.target.value, }) }} placeholder="Provider Name" />
@@ -313,7 +314,7 @@ const Servicedetails = () => {
                                                                     </div>
                                                                 </div>
                                                                 <div className="row mb-5">
-                                                                    <label className="col-sm-2 col-form-label">Provider Email</label>
+                                                                    <label className="col-sm-2 fw-bold col-form-label">Provider Email</label>
                                                                     <div className="col-sm-10">
                                                                         <div className="input-group mb-3">
                                                                             <span className="input-group-text" id="basic-addon1">@</span>
@@ -334,9 +335,9 @@ const Servicedetails = () => {
                                                                                     <button onClick={handleSubmit} className="btn btn-dark">Update</button>
                                                                                 </>
                                                                             ) : null}
-                                                                            {/* <input type="submit" className="form-control bg-primary text-white" /> */}
                                                                         </div>
                                                                     </div>
+                                                                </div>
                                                                 </div>
                                                             </form>{/* End General Form Elements */}
 

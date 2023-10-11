@@ -119,6 +119,7 @@ const Addprovider = () => {
         }
         const formData = new FormData();
         for (const file of img) {
+            // console.log(file,":::dfsfs::::");
             formData.append("providerimg", file);
         }
 
@@ -150,26 +151,52 @@ const Addprovider = () => {
         formData.append("bankbranchname", data.bankbranchname);
 
         try {
-
-            axios.post(`${process.env.REACT_APP_URL}/admin/addprovider`, formData, { headers: { token } })
-                .then((responce) => {
-                    console.log(responce.data);
-                }).catch((err) => {
-                    console.log(err);
-                })
+            axios.post(`${process.env.REACT_APP_URL}/admin/addprovider`, formData, {
+                headers: {
+                    'token': token,
+                    'Content-Type': 'multipart/form-data', // Set the content type for file uploads
+                }
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
 
     }
-    const handleFileChange = (event) => {
-        const selectedFiles = event.target.files;
 
-        // Convert the selectedFiles NodeList to an array and update the state
+    
+    const handleFileChange = (event) => {
+        console.log('event', event)
+        const selectedFiles = event.target.files;
+        const myNewFile = new File([selectedFiles], 'new_name.png', {type: event.target.files[0].type});
         setImg((prevFiles) => [...prevFiles, ...Array.from(selectedFiles)]);
-        console.log(img);
+        console.log('check:::',myNewFile);
     };
 
+    // const handleFileChange = (event) => {
+    //     console.log('event', event);
+    //     const file_obj = {
+    //         [event.target.name]: event.target.files
+    //     };
+    //     setImg((prevFiles) => [...prevFiles, file_obj]);
+    // };
+
+    // const handleFileChange = (event) => {
+        // const file_obj = {
+        //     [event.target.name]: event.target.files[0]
+        // };
+        // setImg([...img, file_obj]);
+        // setImg([...img, event.target.files[0]]);
+    // };
+    
+
+
+   
     return (
         <>
         <Header/>
@@ -202,7 +229,9 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Profile Photos <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3'>
-                                                            <input type='file' onChange={handleFileChange}
+                                                            <input type='file' 
+                                                            name="provide-profile"
+                                                            onChange={handleFileChange}
                                                                 multiple className='form-control' placeholder='Provider Name' />
                                                         </div>
                                                     </div>
@@ -220,7 +249,7 @@ const Addprovider = () => {
                                                     <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Provider Numbar <span className='text-red'>*</span></label>
                                                     <div className='col-sm-9 col-lg-10'>
                                                         <div className='me-3 form-floating'>
-                                                            <input type='text' className='form-control' value={providernumber} onChange={(e) => setProvidernumber(e.target.value)} placeholder='Provider Numbar' />
+                                                            <input type='number' className='form-control' value={providernumber} onChange={(e) => setProvidernumber(e.target.value)} placeholder='Provider Numbar' />
                                                             <label htmlFor="floatingTextarea">Provider Number</label>
                                                         </div>
                                                     </div>
@@ -305,7 +334,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Numbar <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 form-floating'>
-                                                                        <input type='text' className='form-control' value={bussinessnumber} onChange={(e) => setBussinessnumber(e.target.value)} placeholder='Business Numbar' />
+                                                                        <input type='number' className='form-control' value={bussinessnumber} onChange={(e) => setBussinessnumber(e.target.value)} placeholder='Business Numbar' />
                                                                         <label htmlFor="floatingTextarea">Business Number</label>
                                                                     </div>
                                                                 </div>
@@ -341,7 +370,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Business Brosar <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' onChange={handleFileChange} multiple className='form-control' placeholder='Business Brosar' />
+                                                                        <input type='file' name='bussiness-brosar' onChange={handleFileChange} multiple className='form-control' placeholder='Business Brosar' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -552,7 +581,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Aadharcard Image JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Aadharcard Image JPEG' />
+                                                                        <input type='file' name='adharcard-image' onChange={handleFileChange} className='form-control' placeholder='Aadharcard Image JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -560,7 +589,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Pancard Image JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 '>
-                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Pancard Image JPEG' />
+                                                                        <input type='file' name='pancard-image' onChange={handleFileChange} className='form-control' placeholder='Pancard Image JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -568,7 +597,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>GST File JPEG <span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3 '>
-                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='GST File JPEG' />
+                                                                        <input type='file' name='gst-file' onChange={handleFileChange} className='form-control' placeholder='GST File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -576,7 +605,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>TDS File JPEG<span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='TDS File JPEG' />
+                                                                        <input type='file' name='tds-file' onChange={handleFileChange} className='form-control' placeholder='TDS File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -584,7 +613,7 @@ const Addprovider = () => {
                                                                 <label className='col-sm-3 col-lg-2 col-form-lable fw-bold'>Agreement File JPEG<span className='text-red'>*</span></label>
                                                                 <div className='col-sm-9 col-lg-10'>
                                                                     <div className='me-3'>
-                                                                        <input type='file' onChange={handleFileChange} className='form-control' placeholder='Agreement File JPEG' />
+                                                                        <input type='file' name='agreement-file' onChange={handleFileChange} className='form-control' placeholder='Agreement File JPEG' />
                                                                     </div>
                                                                 </div>
                                                             </div>
