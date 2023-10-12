@@ -34,7 +34,7 @@ const Addprovider = () => {
     const [bankifsccode, setBankifsccode] = useState('');
     const [bankbranchname, setBankbranchname] = useState('');
     // Files
-    const [img, setImg] = useState([])
+    const [img, setImg] = useState({})
 
     // Main object
 
@@ -170,28 +170,32 @@ const Addprovider = () => {
     }
 
     
+    // const handleFileChange = (event) => {
+    //     console.log('event', event)
+    //     const selectedFiles = event.target.files;
+    //     const myNewFile = new File([selectedFiles], 'new_name.png', {type: event.target.files[0].type});
+    //     setImg((prevFiles) => {
+            
+    //         console.log('check:::',[...prevFiles, ...Array.from(selectedFiles)]);
+    //         return [...prevFiles, ...Array.from(selectedFiles)]
+    //     });
+    // };
+
     const handleFileChange = (event) => {
-        console.log('event', event)
-        const selectedFiles = event.target.files;
-        const myNewFile = new File([selectedFiles], 'new_name.png', {type: event.target.files[0].type});
-        setImg((prevFiles) => [...prevFiles, ...Array.from(selectedFiles)]);
-        console.log('check:::',myNewFile);
+        const file_obj = {
+            [event.target.name]: Array.from(event.target.files)[0]
+        };
+        console.log('event 1', file_obj);
+        setImg((prevFiles) => ({...prevFiles, ...file_obj}));
+        console.log('event 2', img);
     };
 
     // const handleFileChange = (event) => {
-    //     console.log('event', event);
     //     const file_obj = {
-    //         [event.target.name]: event.target.files
+    //         [event.target.name]: event.target.files[0]
     //     };
-    //     setImg((prevFiles) => [...prevFiles, file_obj]);
-    // };
-
-    // const handleFileChange = (event) => {
-        // const file_obj = {
-        //     [event.target.name]: event.target.files[0]
-        // };
-        // setImg([...img, file_obj]);
-        // setImg([...img, event.target.files[0]]);
+    //     setImg([...img, file_obj]);
+    //     setImg([...img, event.target.files[0]]);
     // };
     
 

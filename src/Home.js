@@ -2,16 +2,32 @@ import React, { useEffect, useState } from "react";
 import './App.css'
 
 import Header from "./components/Header";
+import Loader from "./components/Loader";
 
 const Home = () => {
-    
-    
+    const [isLoading, setIsLoading] = useState(true)
+useEffect(() => {
+    // Set the duration for showing the loader in milliseconds
+    const showTime = 5000; // 5 seconds
+
+    // Function to hide the loader and set isLoading to false
+    function hideLoader() {
+      setIsLoading(false);
+    }
+
+    // Show the loader for the specified showTime
+    const timer = setTimeout(hideLoader, showTime);
+
+    // Clear the timer when the component unmounts to avoid memory leaks
+    return () => clearTimeout(timer);
+  }, []);
     return (
         <>
+            {
+                isLoading ? (<><Loader /></>): (<>
+        <Header/>
 
-            <Header/>
 
-            
 
             <div>
                 <main id="main" className="main">
@@ -429,6 +445,9 @@ const Home = () => {
                 </footer>{/* End Footer */}
                 <a href="#" className="back-to-top d-flex align-items-center justify-content-center"><i className="bi bi-arrow-up-short" /></a>
             </div>
+        </>)
+}
+           
 
 
         </>
