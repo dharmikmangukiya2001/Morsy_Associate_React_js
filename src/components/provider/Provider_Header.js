@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
-import '../App.css'
+import React, { useEffect, useState } from "react";
+import '../../App.css'
 import axios from "axios";
 
-
-const Header = () => {
+const Provider_Header = () => {
 
     // toggl bar On lg-sizing
     const [sidebarOpen, setsidebarOpen] = useState(window.innerWidth > 1200);
@@ -25,16 +23,18 @@ const Header = () => {
     // Toggl Bar Closed
 
 
-    const [admins, setAdmins] = useState([])
 
-    const token = localStorage.getItem("token");
+
+    const [providers, setProvider] = useState([])
+
+    const providertoken = localStorage.getItem("providertoken");
     // console.log("token: ", token);
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_URL}/admin/home`, { headers: { token } }).then(function (response) {
+        axios.get(`${process.env.REACT_APP_URL}/provider/dashboard`, { headers: { providertoken } }).then(function (response) {
             // handle success
-            // console.log(response.data);
-            setAdmins(response.data.admindata)
-            // console.log("admin:", admins);
+            setProvider(response.data.provider)
+            // console.log(response.data,"provider:::");
+            // console.log(providers,"providerdata:::");
 
         })
             .catch(function (error) {
@@ -44,14 +44,16 @@ const Header = () => {
     }, [])
     return (
         <>
+
+
             <header id="header" className="header fixed-top d-flex align-items-center">
                 <div className="d-flex align-items-center justify-content-between">
                     <a href="index.html" className="logo d-flex align-items-center">
-                        <Link to="/admin_home"><img src="/assets/img/Logos.png" alt="Logos" /></Link>
+                        <img src="/assets/img/Logos.png" alt="Logos" />
                         {/* <img src={require('../../public/assets/img/Logos.png')} width="250px" alt /> */}
                         {/* <span className="d-none d-lg-block">NiceAdmin</span> */}
                     </a>
-                    <i className="bi bi-list toggle-sidebar-btn" onClick={toggleSidebar} />
+                    <i className="bi bi-list toggle-sidebar-btn d-lg-none" onClick={toggleSidebar} />
                     {/* <i className="bi bi-list toggle-sidebar-btn d-lg-none d-block" onClick={tablettoggleSidebar} /> */}
                 </div>{/* End Logo */}
                 <div className="search-bar">
@@ -188,13 +190,14 @@ const Header = () => {
                         </li>{/* End Messages Nav */}
                         <li className="nav-item dropdown pe-3">
                             <a className="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                                <img src="../assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" />
-                                {/* <span className="d-none d-md-block dropdown-toggle ps-2">{admins.adminname}</span> */}
+                                {/* <img src="../assets/img/profile-img.jpg" alt="Profile" className="rounded-circle" /> */}
+                                <img className="rounded-circle" src={`${process.env.REACT_APP_URL}/${providers.img}`} height={50} />
+                                <span className="d-none d-md-block dropdown-toggle ps-2">{providers.bussinessname}</span>
                             </a>{/* End Profile Iamge Icon */}
                             <ul className="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                                 <li className="dropdown-header">
-                                    {/* <h6>{admins.adminname}</h6> */}
-                                    {/* <span>{admins.adminemail}</span> */}
+                                    <h6>{providers.bussinessname}</h6>
+                                    <span>{providers.bussinessemailid}</span>
                                 </li>
                                 <li>
                                     <hr className="dropdown-divider" />
@@ -247,21 +250,24 @@ const Header = () => {
                         </a>
                     </li>
                     <li className="nav-item">
-                            <Link className="nav-link collapsed" to='/admin_home'><i className="bi bi-menu-button-wide" /><span>Dashboard</span></Link>
+                        <a className="nav-link collapsed">
+                            <i className="bi bi-menu-button-wide" /><span>Dashboard</span>
+                        </a>
                     </li>
+
                     <li className="nav-item">
                         <a className="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse">
                             <i className="bi bi-journal-text" /><span>Services</span><i className="bi bi-chevron-down ms-auto" />
                         </a>
                         <ul id="forms-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li>
-                                <a href="forms-elements.html" class="a-none ps-0">
-                                    <Link className='a-none' to='/admin_addservice'><i className="bi bi-plus-square fs-5" /><span>Add Services</span></Link>
+                                <a href="forms-elements.html" class="a-none">
+                                    <i className="bi bi-plus-square fs-5" /><span>Add Services</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="forms-layouts.html" class="a-none ps-0">
-                                    <Link className='a-none' to="/admin_showservices"><i className="bi bi-server fs-5" /><span>Show Services</span></Link>
+                                <a href="forms-layouts.html" class="a-none">
+                                    <i className="bi bi-server fs-5" /><span>Show Services</span>
                                 </a>
                             </li>
                         </ul>
@@ -272,13 +278,13 @@ const Header = () => {
                         </a>
                         <ul id="tables-nav" className="nav-content collapse " data-bs-parent="#sidebar-nav">
                             <li>
-                                <a href="tables-general.html" class="a-none ps-0">
-                                    <Link className='a-none' to='/admin_addprovider'><i className="bi bi-plus-square fs-5" /><span>Add Provider</span></Link>
+                                <a href="tables-general.html" class="a-none">
+                                    <i className="bi bi-plus-square fs-5" /><span>Add Provider</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="tables-data.html" class="a-none ps-0">
-                                    <Link className='a-none' to='/admin_showproviders'><i className="bi bi-server fs-5" /><span>Show Providers</span></Link>
+                                <a href="tables-data.html" class="a-none">
+                                    <i className="bi bi-server fs-5" /><span>Show Providers</span>
                                 </a>
                             </li>
                         </ul>
@@ -373,9 +379,10 @@ const Header = () => {
                 </ul>
             </aside>
 
+
+
         </>
     )
+
 }
-
-
-export default Header
+export default Provider_Header

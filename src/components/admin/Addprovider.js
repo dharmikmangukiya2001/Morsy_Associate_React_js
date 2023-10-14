@@ -118,6 +118,7 @@ const Addprovider = () => {
             return;
         }
         const formData = new FormData();
+        
         for (const file of img) {
             // console.log(file,":::dfsfs::::");
             formData.append("providerimg", file);

@@ -70,10 +70,10 @@ const Servicedetails = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (files.length === 0) {
-            console.log("Please select at least one file");
-            return
-        }
+        // if (files.length === 0) {
+        //     console.log("Please select at least one file");
+        //     return
+        // }
 
         const formData = new FormData();
 
